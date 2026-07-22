@@ -11,6 +11,7 @@ SuperIntArray::SuperIntArray()
 
 
 
+
 SuperIntArray::SuperIntArray(int array[], int size)
 {
 
@@ -29,6 +30,7 @@ SuperIntArray::SuperIntArray(int array[], int size)
 
 
 
+
 SuperIntArray::SuperIntArray(int num)
 {
 
@@ -39,7 +41,6 @@ SuperIntArray::SuperIntArray(int num)
     nums[0] = num;
 
 }
-
 
 
 
@@ -65,8 +66,7 @@ SuperIntArray::SuperIntArray(vector<int> array)
 
 
 
-
-SuperIntArray::SuperIntArray(SuperIntArray &arr)
+SuperIntArray::SuperIntArray(const SuperIntArray &arr)
 {
 
     numberOfNums = arr.numberOfNums;
@@ -95,12 +95,12 @@ SuperIntArray::SuperIntArray(SuperIntArray &arr)
 
 
 
-
 SuperIntArray::~SuperIntArray()
 {
-    delete[] nums;
-}
 
+    delete[] nums;
+
+}
 
 
 
@@ -110,7 +110,6 @@ int* SuperIntArray::getNums()
 {
     return nums;
 }
-
 
 
 
@@ -197,6 +196,7 @@ int SuperIntArray::get(int index)
 
 
 
+
 void SuperIntArray::change(int index, int value)
 {
     nums[index] = value;
@@ -208,7 +208,7 @@ void SuperIntArray::change(int index, int value)
 
 
 
-SuperIntArray& SuperIntArray::operator=(SuperIntArray& right)
+SuperIntArray& SuperIntArray::operator=(const SuperIntArray& right)
 {
 
     if(this != &right)
@@ -250,15 +250,13 @@ SuperIntArray& SuperIntArray::operator=(SuperIntArray& right)
 
 
 
-SuperIntArray SuperIntArray::operator+(SuperIntArray& right)
+SuperIntArray SuperIntArray::operator+(const SuperIntArray& right)
 {
 
     SuperIntArray result;
 
 
-
     result.numberOfNums = numberOfNums + right.numberOfNums;
-
 
 
     result.nums = new int[result.numberOfNums];
@@ -277,7 +275,6 @@ SuperIntArray SuperIntArray::operator+(SuperIntArray& right)
         index++;
 
     }
-
 
 
 
@@ -305,7 +302,9 @@ SuperIntArray SuperIntArray::operator+(SuperIntArray& right)
 
 int& SuperIntArray::operator[](int index)
 {
+
     return nums[index];
+
 }
 
 
@@ -314,7 +313,7 @@ int& SuperIntArray::operator[](int index)
 
 
 
-ostream& operator<<(ostream& stream, SuperIntArray& right)
+ostream& operator<<(ostream& stream, const SuperIntArray& right)
 {
 
 
@@ -341,7 +340,6 @@ ostream& operator<<(ostream& stream, SuperIntArray& right)
     return stream;
 
 }
-
 
 
 
@@ -403,7 +401,6 @@ int SuperIntArray::getMin(int nums[], int size)
 
 
 
-
 double SuperIntArray::getMean(int nums[], int size)
 {
 
@@ -416,6 +413,6 @@ double SuperIntArray::getMean(int nums[], int size)
     }
 
 
-    return (double) total / size;
+    return (double)total / size;
 
 }
