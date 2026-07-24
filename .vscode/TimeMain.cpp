@@ -11,13 +11,9 @@ void assignmentTest()
     Time a(1,2,30,15);
 
     Time b;
-
-
     b = a;
 
-
     cout << "Assignment Test:" << endl;
-
     cout << b << endl;
 
 }
@@ -34,12 +30,12 @@ void testTimeAddition()
     Time b(0,0,0,20);
 
 
-    a + b;
+    Time result = a + b;
 
 
     cout << "Addition Test:" << endl;
 
-    cout << a << endl;
+    cout << result << endl;
 
 }
 
@@ -55,16 +51,12 @@ void testTimeSubtraction()
     Time b(1,5,30,0);
 
 
-    // using negative time
-    Time result(-1,-5,-30,0);
-
-
-    a + result;
+    Time result = a - b;
 
 
     cout << "Subtraction Test:" << endl;
 
-    cout << a << endl;
+    cout << result << endl;
 
 }
 

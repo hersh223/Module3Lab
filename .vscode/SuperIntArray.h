@@ -18,33 +18,26 @@ private:
 
 public:
 
-    // Constructors
     SuperIntArray();
 
-    SuperIntArray(int nums[], int size);
+    SuperIntArray(int array[], int size);
 
     SuperIntArray(int num);
 
-    SuperIntArray(vector<int> nums);
+    SuperIntArray(vector<int> array);
 
-    SuperIntArray(const SuperIntArray &arr);
+    SuperIntArray(const SuperIntArray& arr);
 
-
-    // Destructor
     ~SuperIntArray();
 
 
-
-    // Getters / Setters
     int* getNums();
-
-    void setNums(int nums[], int size);
 
     int getNumberOfNums();
 
+    void setNums(int array[], int size);
 
 
-    // Functions
     void add(int num);
 
     int get(int index);
@@ -52,8 +45,6 @@ public:
     void change(int index, int value);
 
 
-
-    // Operators
     SuperIntArray& operator=(const SuperIntArray& right);
 
     SuperIntArray operator+(const SuperIntArray& right);
@@ -61,18 +52,15 @@ public:
     int& operator[](int index);
 
 
+    friend ostream& operator<<(ostream& stream,
+                               const SuperIntArray& right);
 
-    friend ostream& operator<<(ostream& stream, const SuperIntArray& right);
 
-
-
-    // Static functions
     static int getMax(int nums[], int size);
 
     static int getMin(int nums[], int size);
 
     static double getMean(int nums[], int size);
-
 
 };
 

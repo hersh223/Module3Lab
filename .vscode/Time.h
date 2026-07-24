@@ -2,7 +2,9 @@
 #define TIME_H
 
 #include <iostream>
+
 using namespace std;
+
 
 class Time
 {
@@ -15,6 +17,10 @@ private:
     int seconds;
 
 
+    void normalize();
+
+    int totalSeconds() const;
+
 public:
 
     Time();
@@ -25,58 +31,57 @@ public:
 
     Time(int hours, int minutes);
 
-
-    Time(Time& time);
+    Time(const Time& time);
 
     ~Time();
 
 
-    int getDays();
-    int getHours();
-    int getMinutes();
-    int getSeconds();
+    int getDays() const;
+
+    int getHours() const;
+
+    int getMinutes() const;
+
+    int getSeconds() const;
 
 
     void setDays(int days);
+
     void setHours(int hours);
+
     void setMinutes(int minutes);
+
     void setSeconds(int seconds);
 
 
 
-    Time& operator=(Time& right);
-
-    Time& operator+(Time& right);
-
-    Time& operator-(Time& right);
+    Time& operator=(const Time& right);
 
 
-    bool operator>(Time& right);
+    Time operator+(const Time& right);
 
-    bool operator<(Time& right);
-
-    bool operator>=(Time& right);
-
-    bool operator<=(Time& right);
-
-    bool operator==(Time& right);
+    Time operator-(const Time& right);
 
 
 
-    friend ostream& operator<<(ostream& stream, Time& right);
+    bool operator>(const Time& right) const;
+
+    bool operator<(const Time& right) const;
+
+    bool operator>=(const Time& right) const;
+
+    bool operator<=(const Time& right) const;
+
+    bool operator==(const Time& right) const;
 
 
 
-    operator int();
+    friend ostream& operator<<(ostream& stream,
+                               const Time& right);
 
 
 
-private:
-
-    void normalize();
-
-    int totalSeconds();
-
+    operator int() const;
 
 };
 

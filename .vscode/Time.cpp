@@ -17,6 +17,8 @@ Time::Time(int d, int h, int m, int s)
     hours = h;
     minutes = m;
     seconds = s;
+
+    normalize();
 }
 
 
@@ -27,6 +29,8 @@ Time::Time(int h, int m, int s)
     hours = h;
     minutes = m;
     seconds = s;
+
+    normalize();
 }
 
 
@@ -37,12 +41,13 @@ Time::Time(int h, int m)
     hours = h;
     minutes = m;
     seconds = 0;
+
+    normalize();
 }
 
 
 
-
-Time::Time(Time& time)
+Time::Time(const Time& time)
 {
     days = time.days;
     hours = time.hours;
@@ -52,31 +57,38 @@ Time::Time(Time& time)
 
 
 
+Time::~Time()
+{
 
-int Time::getDays()
+}
+
+
+
+int Time::getDays() const
 {
     return days;
 }
 
 
-int Time::getHours()
+
+int Time::getHours() const
 {
     return hours;
 }
 
 
-int Time::getMinutes()
+
+int Time::getMinutes() const
 {
     return minutes;
 }
 
 
-int Time::getSeconds()
+
+int Time::getSeconds() const
 {
     return seconds;
 }
-
-
 
 
 
@@ -86,57 +98,35 @@ void Time::setDays(int d)
 }
 
 
+
 void Time::setHours(int h)
 {
     hours = h;
+    normalize();
 }
+
 
 
 void Time::setMinutes(int m)
 {
     minutes = m;
+    normalize();
 }
+
 
 
 void Time::setSeconds(int s)
 {
     seconds = s;
+    normalize();
 }
 
 
 
 
 
-Time& Time::operator=(Time& right)
+void Time::normalize()
 {
-
-    if(this != &right)
-    {
-        days = right.days;
-        hours = right.hours;
-        minutes = right.minutes;
-        seconds = right.seconds;
-    }
-
-
-    return *this;
-}
-
-
-
-
-
-
-
-Time& Time::operator+(Time& right)
-{
-
-    seconds += right.seconds;
-    minutes += right.minutes;
-    hours += right.hours;
-    days += right.days;
-
-
 
     while(seconds >= 60)
     {
@@ -179,57 +169,122 @@ Time& Time::operator+(Time& right)
         days--;
     }
 
+}
+
+
+
+
+
+Time& Time::operator=(const Time& right)
+{
+
+    if(this != &right)
+    {
+        days = right.days;
+        hours = right.hours;
+        minutes = right.minutes;
+        seconds = right.seconds;
+    }
+
 
     return *this;
+
 }
 
 
 
 
 
-
-
-bool Time::operator>(Time& right)
+Time Time::operator+(const Time& right)
 {
-    return (int)*this > (int)right;
+
+    Time result;
+
+
+    result.days = days + right.days;
+
+    result.hours = hours + right.hours;
+
+    result.minutes = minutes + right.minutes;
+
+    result.seconds = seconds + right.seconds;
+
+
+    result.normalize();
+
+
+    return result;
+
 }
 
 
 
-bool Time::operator<(Time& right)
+
+
+Time Time::operator-(const Time& right)
 {
-    return (int)*this < (int)right;
+
+    Time result;
+
+
+    result.days = days - right.days;
+
+    result.hours = hours - right.hours;
+
+    result.minutes = minutes - right.minutes;
+
+    result.seconds = seconds - right.seconds;
+
+
+    result.normalize();
+
+
+    return result;
+
 }
 
 
 
-bool Time::operator>=(Time& right)
+
+
+bool Time::operator>(const Time& right) const
 {
-    return (int)*this >= (int)right;
+    return totalSeconds() > right.totalSeconds();
 }
 
 
 
-bool Time::operator<=(Time& right)
+bool Time::operator<(const Time& right) const
 {
-    return (int)*this <= (int)right;
+    return totalSeconds() < right.totalSeconds();
 }
 
 
 
-bool Time::operator==(Time& right)
+bool Time::operator>=(const Time& right) const
 {
-    return (int)*this == (int)right;
+    return totalSeconds() >= right.totalSeconds();
+}
+
+
+
+bool Time::operator<=(const Time& right) const
+{
+    return totalSeconds() <= right.totalSeconds();
+}
+
+
+
+bool Time::operator==(const Time& right) const
+{
+    return totalSeconds() == right.totalSeconds();
 }
 
 
 
 
 
-
-
-
-ostream& operator<<(ostream& stream, Time& right)
+ostream& operator<<(ostream& stream, const Time& right)
 {
 
     stream << right.days << " days, "
@@ -239,28 +294,33 @@ ostream& operator<<(ostream& stream, Time& right)
 
 
     return stream;
+
 }
 
 
 
 
 
-
-
-Time::operator int()
+int Time::totalSeconds() const
 {
 
-    int totalSeconds = 0;
+    return days * 86400
+         + hours * 3600
+         + minutes * 60
+         + seconds;
+
+}
 
 
-    totalSeconds += days * 86400;
-
-    totalSeconds += hours * 3600;
-
-    totalSeconds += minutes * 60;
-
-    totalSeconds += seconds;
 
 
-    return totalSeconds;
+
+Time::operator int() const
+{
+
+    return days * 86400
+         + hours * 3600
+         + minutes * 60
+         + seconds;
+
 }
